@@ -1,0 +1,103 @@
+package com.challenge.abc;
+
+import java.security.SecureRandom;
+import java.util.Scanner;
+
+public class Trabalho {
+
+	public static void main(String[] args) {
+		int inicio, level, senha, tentativas, chute = 0, nSuperior, nInferior;
+
+		Scanner scan = new Scanner(System.in);
+		SecureRandom random = new SecureRandom();
+
+		System.out.println("JOGO DA SENHA");
+		System.out.println("1 - Jogar");
+		System.out.println("2 - Sair");
+
+		inicio = scan.nextInt();
+		while (inicio < 1 || inicio > 2) {
+			System.out.println("Opção inválida, digite 1 para jogar ou 2 para sair");
+			inicio = scan.nextInt();
+		}
+
+		do {
+			nSuperior = 100;
+			nInferior = 1;
+
+			if (inicio == 1) {
+
+				senha = random.nextInt(99) + 1;
+
+				System.out.println(senha);
+
+				System.out.println("Escolha um nível de dificuldade.");
+				System.out.println("1 - Fácil: Você terá 10 tentativas.");
+				System.out.println("2 - Médio: Você terá 08 tentativas.");
+				System.out.println("3 - Difícil: Você terá 05 tentativas.");
+
+				level = scan.nextInt();
+
+				while (level < 1 || level > 3) {
+					System.out.println("Opção inválida, digite um número de 1 a 3");
+					level = scan.nextInt();
+				}
+
+				if (level == 1) {
+					tentativas = 10;
+				} else if (level == 2) {
+					tentativas = 8;
+				} else {
+					tentativas = 5;
+				}
+
+				System.out.println("Tente adivinhar. Digite um número entre 1 e 100");
+				while (tentativas > 0 && chute != senha) {
+					chute = scan.nextInt();
+					while (chute < nInferior || chute > nSuperior) {
+						System.out.println("Valor inválido. Tente outra vez. Informe um valor entre " + nInferior
+								+ " e " + nSuperior);
+						chute = scan.nextInt();
+					}
+
+					if (chute == senha - 1 || chute == senha + 1) {
+						System.out.println("Você está quente!!");
+					}
+
+					if (senha == chute) {
+						--tentativas;
+						System.out.println("Parabéns, você acertou com " + tentativas + " tentativa(s) restantes");
+					} else if (senha < chute) {
+						--tentativas;
+						if (chute > senha && chute < nSuperior) {
+							nSuperior = chute;
+						}
+						if (tentativas != 0) {
+							System.out.println(
+									"Tente outra vez. Informe um valor entre " + nInferior + " e " + nSuperior);
+						}
+					} else {
+						--tentativas;
+						if (chute < senha && chute > nInferior) {
+							nInferior = chute;
+						}
+						if (tentativas != 0) {
+							System.out.println(
+									"Tente outra vez. Informe um valor entre " + nInferior + " e " + nSuperior);
+						}
+					}
+
+				}
+				if (chute != senha) {
+					System.out.println("Infelizmente você não acertou.");
+				}
+				System.out.println("Digite 1 para jogar novamente.");
+				inicio = scan.nextInt();
+				
+			}
+			
+		} while (inicio == 1);
+		
+		System.out.println("Até a próxima, seu lindão.");
+	}
+}
