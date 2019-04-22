@@ -1,4 +1,4 @@
-package com.challenge.abc;
+package com.challenge.Trabalho;
 
 import java.security.SecureRandom;
 import java.util.Scanner;
